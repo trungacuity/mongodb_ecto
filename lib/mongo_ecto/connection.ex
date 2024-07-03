@@ -328,7 +328,7 @@ defmodule Mongo.Ecto.Connection do
     do: Map.new([total_time: total] ++ acc)
 
   # Currently unused
-  defp log_result({:ok, _query, res}), do: {:ok, res}
+  defp log_result({:ok, _query, res}), do: {:ok, struct(GenericResult, %{result: res})}
   defp log_result(other), do: other
 
   defp log_iodata(measurements, metadata) do
@@ -576,4 +576,8 @@ defmodule Mongo.Ecto.Connection do
   defp log_color(%Query{action: :replace_one}), do: :yellow
   defp log_color(%Query{action: :get_more}), do: :cyan
   defp log_color(%Query{action: _}), do: nil
+end
+
+defmodule GenericResult do
+  defstruct result: nil
 end
