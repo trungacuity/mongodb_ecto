@@ -260,6 +260,8 @@ defmodule Mongo.Ecto.Connection do
       params: params
     } = entry
 
+    IO.inspect(result, label: "result_from_query")
+
     source = Keyword.get(opts, :source)
 
     params =
