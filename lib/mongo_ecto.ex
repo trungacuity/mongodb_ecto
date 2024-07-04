@@ -1,4 +1,4 @@
-defmodule Mongo.Ecto do
+defmodule Ecto.Mongo do
   @moduledoc """
   Ecto integration with MongoDB.
 
