@@ -480,31 +480,31 @@ defmodule Mongo.Ecto.Connection do
   end
 
   defp format_query(%Query{action: :find, extra: coll}, [query, projection]) do
-    "SELECT #{projection} FROM coll WHERE #{query}"
+    "SELECT #{inspect(projection)} FROM #{coll} WHERE #{inspect(query)}"
   end
 
   defp format_query(%Query{action: :insert_one, extra: coll}, [doc]) do
-    "INSERT INTO #{coll} VALUES #{doc}"
+    "INSERT INTO #{coll} VALUES #{inspect(doc)}"
   end
 
   defp format_query(%Query{action: :insert_many, extra: coll}, docs) do
-    "INSERT INTO #{coll} VALUES #{docs} MANY"
+    "INSERT INTO #{coll} VALUES #{inspect(docs)} MANY"
   end
 
   defp format_query(%Query{action: :update_one, extra: coll}, [filter, update]) do
-    "UPDATE #{coll} WHERE #{filter} SET #{update}"
+    "UPDATE #{coll} WHERE #{inspect(filter)} SET #{inspect(update)}"
   end
 
   defp format_query(%Query{action: :update_many, extra: coll}, [filter, update]) do
-    "UPDATE #{coll} WHERE #{filter} SET #{update} MANY"
+    "UPDATE #{coll} WHERE #{inspect(filter)} SET #{inspect(update)} MANY"
   end
 
   defp format_query(%Query{action: :delete_one, extra: coll}, [filter]) do
-    "DELETE FROM #{coll} WHERE #{filter}"
+    "DELETE FROM #{coll} WHERE #{inspect(filter)}"
   end
 
   defp format_query(%Query{action: :delete_many, extra: coll}, [filter]) do
-    "DELETE FROM #{coll} WHERE #{filter} MANY"
+    "DELETE FROM #{coll} WHERE #{inspect(filter)} MANY"
   end
 
   defp format_query(%Query{action: :replace_one, extra: coll}, [filter, doc]) do
