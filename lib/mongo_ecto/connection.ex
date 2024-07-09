@@ -260,8 +260,6 @@ defmodule Mongo.Ecto.Connection do
       params: params
     } = entry
 
-    IO.inspect(result, label: "result_from_query")
-
     source = Keyword.get(opts, :source)
 
     params =
@@ -290,9 +288,6 @@ defmodule Mongo.Ecto.Connection do
     }
 
     if event_name = Keyword.get(opts, :telemetry_event, event_name) do
-       IO.inspect(event_name, label: "event_name_telemetry")
-       IO.inspect(measurements, label: "measurements_telemetry")
-       IO.inspect(metadata, label: "metadata_telemetry")
       :telemetry.execute(event_name, measurements, metadata)
     end
 
