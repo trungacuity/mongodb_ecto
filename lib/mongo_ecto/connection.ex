@@ -480,57 +480,31 @@ defmodule Mongo.Ecto.Connection do
   end
 
   defp format_query(%Query{action: :find, extra: coll}, [query, projection]) do
-    [
-      "FIND",
-      format_part("coll", coll),
-      format_part("query", query),
-      format_part("projection", projection)
-    ]
+    "SELECT #{projection} FROM coll WHERE #{query}"
   end
 
   defp format_query(%Query{action: :insert_one, extra: coll}, [doc]) do
-    ["INSERT", format_part("coll", coll), format_part("document", doc)]
+    "INSERT INTO #{coll} VALUES #{doc}"
   end
 
   defp format_query(%Query{action: :insert_many, extra: coll}, docs) do
-    [
-      "INSERT",
-      format_part("coll", coll),
-      format_part("documents", docs),
-      format_part("many", true)
-    ]
+    "INSERT INTO #{coll} VALUES #{doc} MANY"
   end
 
   defp format_query(%Query{action: :update_one, extra: coll}, [filter, update]) do
-    [
-      "UPDATE",
-      format_part("coll", coll),
-      format_part("filter", filter),
-      format_part("update", update)
-    ]
+    "UPDATE #{coll} WHERE #{filter} SET #{update}"
   end
 
   defp format_query(%Query{action: :update_many, extra: coll}, [filter, update]) do
-    [
-      "UPDATE",
-      format_part("coll", coll),
-      format_part("filter", filter),
-      format_part("update", update),
-      format_part("many", true)
-    ]
+    "UPDATE #{coll} WHERE #{filter} SET #{update} MANY"
   end
 
   defp format_query(%Query{action: :delete_one, extra: coll}, [filter]) do
-    ["DELETE", format_part("coll", coll), format_part("filter", filter)]
+    "DELETE FROM #{coll} WHERE #{filter}"
   end
 
   defp format_query(%Query{action: :delete_many, extra: coll}, [filter]) do
-    [
-      "DELETE",
-      format_part("coll", coll),
-      format_part("filter", filter),
-      format_part("many", true)
-    ]
+    "DELETE FROM #{coll} WHERE #{filter} MANY"
   end
 
   defp format_query(%Query{action: :replace_one, extra: coll}, [filter, doc]) do
