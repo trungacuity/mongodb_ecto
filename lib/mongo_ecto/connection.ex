@@ -488,7 +488,7 @@ defmodule Mongo.Ecto.Connection do
   end
 
   defp format_query(%Query{action: :insert_many, extra: coll}, docs) do
-    "INSERT INTO #{coll} VALUES #{doc} MANY"
+    "INSERT INTO #{coll} VALUES #{docs} MANY"
   end
 
   defp format_query(%Query{action: :update_one, extra: coll}, [filter, update]) do
